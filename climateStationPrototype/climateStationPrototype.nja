@@ -1,0 +1,6 @@
+{
+  "venv": "",
+  "name": "climateStationPrototype",
+  "license": "GNU General Public License v3",
+  "description": "A prototype for climate station done on Raspberry Pi. This project is just to test things out a bit"
+}
