@@ -1,3 +1,4 @@
-import Test1 as Logic
+import BoardTester
 
-Logic.prepare()
+tester = BoardTester.BoardTester()
+tester.test()
