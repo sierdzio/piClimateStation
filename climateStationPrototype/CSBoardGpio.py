@@ -17,6 +17,7 @@ class CSBoardGpio:
     def __init__(self):
         """Prepares the board for communication"""
         GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
 
     def cleanUp(self):
         """Makes sure the GPIO is left in a usable state"""
