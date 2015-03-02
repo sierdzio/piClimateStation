@@ -1,0 +1,32 @@
+1. It should be possible to couple all sensors with LEDs: those will be turned on when the sensor is active (thermal lamp is on, DHT is actively reading, etc.), blink for identification, and be turned off when not in use.
+2. "CS" is placed in front of all class names to prevent name clashes.
+3. It should probably be made possible to read state from output devices, too (check if LED is on, for example).
+
+Classes:
+
+BoardSimulator: a data source providing simulated data
+BoardGpio: a data source providing real data
+
+BoardManager: an interface between the board (or simulator) and the business logic. Simple API, easy to use. Contains a list of Devices
+
+BoardTester: runs some tests of on BoardManager
+
+Device:
+ - input and output
+ - LED, DHT, temperature, humidity, switch (thermal lamp, radiator)
+ - read()
+ - write()
+ - identify()
+ - control status LED
+
+DataLogger:
+ - saves to disk,
+ - sends to network,
+ - sends to DBUS
+
+ClimateStationConfig: self-explanatory, isn't it?
+
+ClimateStation: "main"
+ - console API
+ - GUI launcher
+

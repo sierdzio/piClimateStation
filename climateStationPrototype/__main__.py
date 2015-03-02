@@ -1,4 +1,5 @@
-import BoardTester
+# -*- coding: utf-8 -*-
+import CSBoardTester
 
-tester = BoardTester.BoardTester()
+tester = CSBoardTester.CSBoardTester()
 tester.test()

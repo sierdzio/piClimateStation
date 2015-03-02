@@ -1,0 +1,29 @@
+{
+  "mainFile": "climateStationPrototype/__main__.py", 
+  "use-tabs": false, 
+  "venv": "", 
+  "relatedProjects": [], 
+  "name": "raspberryClimateStation", 
+  "license": "GNU General Public License v3", 
+  "url": "", 
+  "pythonPath": "python2", 
+  "preExecScript": "", 
+  "additional_builtins": [], 
+  "programParams": "", 
+  "indentation": 4, 
+  "PYTHONPATH": "", 
+  "supported-extensions": [
+    ".py", 
+    ".html", 
+    ".jpg", 
+    ".png", 
+    ".ui", 
+    ".css", 
+    ".json", 
+    ".js", 
+    ".ini"
+  ], 
+  "project-type": "Python", 
+  "postExecScript": "", 
+  "description": "Climate station base package: communicates with Raspberry's GPIO ports to read from temperature and humidity sensors, activate and deactivate LEDs, thermal lamps and radiators."
+}
