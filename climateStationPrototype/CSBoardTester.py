@@ -28,6 +28,7 @@ class CSBoardTester:
 
         for pin in self.outputs:
             self.testLed(pin)
+        self.manager.cleanUp()
 
     def testLed(self, pin):
         """Tests a single LED, mounted to a given pin"""

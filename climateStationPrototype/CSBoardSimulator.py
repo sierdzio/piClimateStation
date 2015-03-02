@@ -9,6 +9,10 @@ class CSBoardSimulator:
         """Does nothing"""
         pass
 
+    def cleanUp(self):
+        """Makes sure the GPIO is left in a usable state"""
+        pass
+
     def getSensorState(self, pin):
         """Returns some random state"""
         return random() % 2

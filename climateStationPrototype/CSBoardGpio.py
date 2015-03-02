@@ -18,6 +18,10 @@ class CSBoardGpio:
         """Prepares the board for communication"""
         GPIO.setmode(GPIO.BCM)
 
+    def cleanUp(self):
+        """Makes sure the GPIO is left in a usable state"""
+        GPIO.cleanup()
+
     def getSensorState(self, pin):
         """Attempts to read from DHT sensor on given pin"""
         return DHT.read_retry(DHT.AM2302, pin)
@@ -29,4 +33,3 @@ class CSBoardGpio:
             GPIO.output(pin, 1)
         else:
             GPIO.output(pin, 0)
-        GPIO.cleanup(pin)

@@ -51,6 +51,10 @@ class CSBoardManager:
         """Sets the output pin list. All previous entries are removed"""
         self.outputs = outputs
 
+    def cleanUp(self):
+        """Makes sure the GPIO is left in a usable state"""
+        self.dataSource.cleanUp()
+
     def getSensorState(self, pin):
         """Returns the values reported by given sensor.
         Does nothing if data source is invalid"""
