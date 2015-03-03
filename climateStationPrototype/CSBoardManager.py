@@ -9,7 +9,6 @@ class CSBoardManager:
         """Prepares the board manager"""
         self.devices = []
 
-    # WARNING: this does not work - needs fixing!
     def appendDevices(self, inputs):
         """Appends new devices to the internal list. Existing ones are
         not being replaced"""

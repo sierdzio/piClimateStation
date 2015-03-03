@@ -23,6 +23,11 @@ class CSBoardTester:
              -1, "Second LED", "None")
         self.leds.append(device2)
 
+        device22 = CSDevice.CSDevice()
+        device22.setUp(device22.typeLED, device22.modeSimulator, 26,
+             -1, "Third LED", "Simulated LED")
+        self.leds.append(device22)
+
         device3 = CSDevice.CSDevice()
         device3.setUp(device3.typeDht, device3.modeGpio, 19,
              -1, "First DHT", "None")
@@ -39,9 +44,16 @@ class CSBoardTester:
 
     def test(self):
         """Performs all the tests available in this class"""
+        self.printDevices()
         self.testLeds()
         time.sleep(0.5)
         self.testDhts()
+
+    def printDevices(self):
+        """Prints information about all devices undergoing the test"""
+        print "Devices taking part in this test:"
+        for device in self.manager.devices:
+            print device.toString()
 
     def testLeds(self):
         """ This will test LEDs on default ports. Those ports are 21 and 26."""

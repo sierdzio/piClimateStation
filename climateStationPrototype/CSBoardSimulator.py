@@ -11,12 +11,14 @@ class CSBoardSimulator:
 
     def cleanUp(self):
         """Makes sure the GPIO is left in a usable state"""
-        pass
+        print "[Sim] Cleaning up a pin"
 
     def getSensorState(self, pin):
         """Returns some random state"""
-        return random() % 2
+        result = random() % 2
+        print "[Sim] Returning sensor state for pin {}: {}".format(pin, result)
+        return result
 
     def setSwitchState(self, pin, state):
         """Simulates setting a state"""
-        print "Switching pin {} to state {}".format(pin, state)
+        print "[Sim] Switching pin {} to state {}".format(pin, state)

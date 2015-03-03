@@ -95,3 +95,11 @@ class CSDevice:
         else:
             self._dataSource = None
             self.mode = self.modeNone
+
+    def toString(self):
+        """Returns a well-formatted, human readable string containing all Device
+        infomation currently stored in the object"""
+        return "Device:\n  Name: '{}'\n  Description: '{}'\n  Pin {}\n  LED " \
+        "indicator pin: {}\n  Type: {}\n  Data access mode: {}\n  " \
+        .format(self.name, self.description, self.pin, self.indicatorPin,
+        self.type, self.mode)
