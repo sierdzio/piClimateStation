@@ -34,11 +34,8 @@ class CSBoardTester:
         self.dhts.append(device4)
 
         self.manager = CSBoardManager.CSBoardManager()
-        self.manager.setDevices(self.leds + self.dhts)
-        #self.manager.appendDevices(self.dhts)
-        #self.manager.setDataSource(self.manager.GPIO)
-        #print "Data source used for this test is", \
-        #self.manager.getDataSourceType()
+        self.manager.setDevices(self.leds)
+        self.manager.appendDevices(self.dhts)
 
     def test(self):
         """Performs all the tests available in this class"""

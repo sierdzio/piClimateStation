@@ -13,11 +13,11 @@ class CSBoardManager:
     def appendDevices(self, inputs):
         """Appends new devices to the internal list. Existing ones are
         not being replaced"""
-        self.inputs.append(inputs)
+        self.devices = self.devices + inputs
 
     def setDevices(self, inputs):
         """Sets the devices list. All previous entries are removed"""
-        self.inputs = inputs
+        self.devices = inputs
 
     def cleanUp(self):
         """Makes sure the GPIO is left in a usable state"""
