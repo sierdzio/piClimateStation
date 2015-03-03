@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import CSBoardManager
+import CSDevice
 import time
 
 
@@ -9,12 +10,35 @@ class CSBoardTester:
     def __init__(self):
         """Sets the board mode and default pins"""
         print "Preparing the BoardTester"
-        self.outputs = [21, 26]
-        self.inputs = [19, 20]
+
+        self.leds = []
+        self.dhts = []
+        device1 = CSDevice.CSDevice()
+        device1.setUp(device1.typeLED, device1.modeGpio, 21,
+            -1, "First LED", "None")
+        self.leds.append(device1)
+
+        device2 = CSDevice.CSDevice()
+        device2.setUp(device2.typeLED, device2.modeGpio, 26,
+             -1, "Second LED", "None")
+        self.leds.append(device2)
+
+        device3 = CSDevice.CSDevice()
+        device3.setUp(device3.typeDht, device3.modeGpio, 19,
+             -1, "First DHT", "None")
+        self.dhts.append(device3)
+
+        device4 = CSDevice.CSDevice()
+        device4.setUp(device4.typeLED, device4.modeGpio, 20,
+             -1, "Second DHT", "None")
+        self.dhts.append(device4)
+
         self.manager = CSBoardManager.CSBoardManager()
-        self.manager.setDataSource(self.manager.GPIO)
-        print "Data source used for this test is", \
-        self.manager.getDataSourceType()
+        self.manager.setDevices(self.leds + self.dhts)
+        #self.manager.appendDevices(self.dhts)
+        #self.manager.setDataSource(self.manager.GPIO)
+        #print "Data source used for this test is", \
+        #self.manager.getDataSourceType()
 
     def test(self):
         """Performs all the tests available in this class"""
@@ -26,30 +50,30 @@ class CSBoardTester:
         """ This will test LEDs on default ports. Those ports are 21 and 26."""
         print "Testing LEDs"
 
-        for pin in self.outputs:
-            self.testLed(pin)
+        for led in self.leds:
+            self.testLed(led)
         self.manager.cleanUp()
 
-    def testLed(self, pin):
+    def testLed(self, device):
         """Tests a single LED, mounted to a given pin"""
-        print "  Testing LED on pin: {}. Will blink 10 times".format(pin)
+        print "  Testing LED on pin: {}. Will blink 10 times".format(device.pin)
         count = 10
         while count > 0:
-            self.manager.setSwitchState(pin, True)
+            self.manager.setDeviceState(device, True)
             time.sleep(0.2)
-            self.manager.setSwitchState(pin, False)
+            self.manager.setDeviceState(device, False)
             time.sleep(0.2)
             count = count - 1
 
     def testDhts(self):
         """Tests the DHT sensors"""
         print "Testing DHTs"
-        for pin in self.inputs:
-            humidity, temperature = self.manager.getSensorState(pin)
+        for device in self.dhts:
+            humidity, temperature = self.manager.deviceState(device)
             if humidity is not None and temperature is not None:
                 print "  Testing DHT on pin: {0}, temperature: {1:0.1f}, " \
                 "humidity: {2:0.1f}" \
-                .format(pin, temperature, humidity)
+                .format(device.pin, temperature, humidity)
             else:
-                print "  Error: could not read from DHT sensor on pin:", pin, \
-                "Please retry"
+                print "  Error: could not read from DHT sensor on pin:", \
+                device.pin, "Please retry"
