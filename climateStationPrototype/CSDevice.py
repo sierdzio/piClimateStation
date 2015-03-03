@@ -27,8 +27,8 @@ class CSDevice:
         self._dataSource = None
 
         # Does the device have a LED indicator (and it's pin)
-        self.hasIndicator = False
         self.indicatorPin = -1
+        self.indicatorState = False
 
         # Device's GPIO pin number (BCM!)
         self.pin = -1
@@ -78,9 +78,19 @@ class CSDevice:
         if self.isValid():
             self._dataSource.setSwitchState(self.pin, state)
 
+    def hasIndicator(self):
+        """Returns true if the control contains an indicator LED"""
+        if self.indicatorPin >= 0 and self.indicatorPin <= 31:
+            return True
+        else:
+            return False
+
     def toggleIndicator(self):
         """Turns the indicator LED on or off"""
-        pass
+        if self.hasIndicator() and self.isValid():
+            self.indicatorState = not self.indicatorState
+            self._dataSource.setSwitchState(self.indicatorPin,
+            self.indicatorState)
 
     def setDataMode(self, mode):
         """Sets the data source to either real GPIO or simulator"""
