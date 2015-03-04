@@ -6,7 +6,7 @@
   "name": "raspberryClimateStation", 
   "license": "GNU General Public License v3", 
   "url": "", 
-  "pythonPath": "python3", 
+  "pythonPath": "python2", 
   "preExecScript": "", 
   "additional_builtins": [], 
   "programParams": "", 
