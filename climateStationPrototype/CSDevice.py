@@ -92,6 +92,22 @@ class CSDevice:
             self._dataSource.setSwitchState(self.indicatorPin,
             self.indicatorState)
 
+    def numberOfInputs(self):
+        """Returns the number of inputs this device has. An input is something
+        we can change, like LED state, a switch, and so on"""
+        result = 1
+        if self.type is self.typeDht or self.type is self.typeNone:
+            result = 0
+        return result
+
+    def numberOfOutputs(self):
+        """Returns the number of outputs. An output is something that
+        returns a value, like a temperature sensor"""
+        result = 0
+        if self.type is self.typeDht:
+            result = 2
+        return result
+
     def setDataMode(self, mode):
         """Sets the data source to either real GPIO or simulator"""
         if mode is self.modeSimulator:
