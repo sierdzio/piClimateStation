@@ -9,7 +9,7 @@ class CSBoardTester:
 
     def __init__(self):
         """Sets the board mode and default pins"""
-        print "Preparing the BoardTester"
+        print("Preparing the BoardTester")
 
         devices = []
         simulated = []
@@ -39,13 +39,13 @@ class CSBoardTester:
 
     def printDevices(self):
         """Prints information about all devices undergoing the test"""
-        print "Devices taking part in this test:"
+        print("Devices taking part in this test:")
         for device in self.manager.devices:
-            print device.toString()
+            print(device.toString())
 
     def testDevices(self):
         """ This will test devices added to the list"""
-        print "Testing Devices"
+        print("Testing Devices")
 
         for device in self.manager.devices:
             self.testDevice(device)
@@ -53,13 +53,13 @@ class CSBoardTester:
 
     def testDevice(self, device):
         """Tests a single deivce"""
-        print "  Testing Device on pin: {}".format(device.pin)
+        print("  Testing Device on pin: {}".format(device.pin))
 
         if not device.isValid():
-            print "    Device is not valid!"
+            print("    Device is not valid!")
 
         if device.hasIndicator():
-            print "    Indicator LED will blink 10 times"
+            print("    Indicator LED will blink 10 times")
             count = 10
             while count > 0:
                 device.toggleIndicator()
@@ -69,7 +69,7 @@ class CSBoardTester:
                 count = count - 1
 
         if device.numberOfInputs() is 1:
-            print "    Input detected. Will blink 10 times"
+            print("    Input detected. Will blink 10 times")
             count = 10
             while count > 0:
                 device.setState(1)
@@ -79,12 +79,12 @@ class CSBoardTester:
                 count = count - 1
 
         if device.numberOfOutputs() is 2:
-            print "    2 outputs detected. Reading..."
+            print("    2 outputs detected. Reading...")
             humidity, temperature = device.state()
             if humidity is not None and temperature is not None:
-                print "    Testing DHT on pin: {0}, temperature: {1:0.1f}, " \
-                "humidity: {2:0.1f}" \
-                .format(device.pin, temperature, humidity)
+                print("    Testing DHT on pin: {0}, temperature: {1:0.1f}, "
+                "humidity: {2:0.1f}"
+                .format(device.pin, temperature, humidity))
             else:
-                print "    Error: could not read from DHT sensor on pin:", \
-                device.pin, "Please retry"
+                print("    Error: could not read from DHT sensor on pin:",
+                device.pin, "Please retry")
