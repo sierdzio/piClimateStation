@@ -6,3 +6,5 @@ This project is Free Software, distributed under GPL v3 license. The project is 
 This project currently only consists of a basic prototype that does not even work. If you've got here looking for a ready-made solution, you should consider:
  a) waiting for the code to mature (will take a long time)
  b) searching for some other project
+
+This project relies on Adafruit's DHT library: https://github.com/adafruit/Adafruit_Python_DHT.git
