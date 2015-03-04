@@ -19,6 +19,9 @@ class CSDevice:
     def __init__(self):
         """Initializes the device"""
 
+        self.validTypes = [self.typeDht, self.typeLED, self.typeSwitch]
+        self.validModes = [self.modeGpio, self.modeSimulator]
+
         # Device type
         self.type = self.typeNone
 
@@ -41,8 +44,8 @@ class CSDevice:
 
     def setUp(self, type, mode, pin, indicatorPin, name, description):
         """Allows to quickly set up a device object"""
-        # TODO: check values for validity!
-        self.type = type
+        if type in self.validTypes:
+            self.type = type
         self.setDataMode(mode)
         self.pin = pin
         self.indicatorPin = indicatorPin
