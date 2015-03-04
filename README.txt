@@ -8,3 +8,10 @@ This project currently only consists of a basic prototype that does not even wor
  b) searching for some other project
 
 This project relies on Adafruit's DHT library: https://github.com/adafruit/Adafruit_Python_DHT.git
+
+To install that library, do this (Debian):
+    git clone https://github.com/adafruit/Adafruit_Python_DHT.git libdht
+    cd libdht
+    sudo apt-get update
+    sudo apt-get install build-essential python2-dev
+    sudo python2 setup.py install
