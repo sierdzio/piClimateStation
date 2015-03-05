@@ -15,8 +15,9 @@ class CSBoardSimulator:
 
     def getSensorState(self, pin):
         """Returns some random state"""
-        result = random() % 2
-        print("[Sim] Returning sensor state for pin {}: {}".format(pin, result))
+        result = (random.random(), random.random() * 3)
+        print("[Sim] Returning sensor state for pin {0}: {1:0.1f}, {2:0.1f}"
+            .format(pin, result[0], result[1]))
         return result
 
     def setSwitchState(self, pin, state):

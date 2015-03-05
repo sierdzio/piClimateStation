@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import CSBoardManager
-import CSDevice
+import CSConfig
+#import CSDevice
 import time
 
 
@@ -10,27 +11,13 @@ class CSBoardTester:
     def __init__(self):
         """Sets the board mode and default pins"""
         print("Preparing the BoardTester")
-
-        devices = []
-        simulated = []
-        device1 = CSDevice.CSDevice()
-        device1.setUp(device1.typeDht, device1.modeSimulator, 20,
-            21, "First DHT device", "None")
-        devices.append(device1)
-
-        device2 = CSDevice.CSDevice()
-        device2.setUp(device2.typeDht, device2.modeSimulator, 19,
-             26, "Second DHT device", "None")
-        devices.append(device2)
-
-        device22 = CSDevice.CSDevice()
-        device22.setUp(device22.typeLED, device22.modeSimulator, 26,
-             -1, "A LED", "Simulated LED")
-        simulated.append(device22)
-
         self.manager = CSBoardManager.CSBoardManager()
+
+    def loadDevices(self, fileName):
+        """Loads a list of devices from an INI file"""
+        config = CSConfig.CSConfig()
+        devices = config.loadDevices(fileName)
         self.manager.setDevices(devices)
-        self.manager.appendDevices(simulated)
 
     def test(self):
         """Performs all the tests available in this class"""
@@ -57,10 +44,11 @@ class CSBoardTester:
 
         if not device.isValid():
             print("    Device is not valid!")
+            return
 
         if device.hasIndicator():
-            print("    Indicator LED will blink 10 times")
-            count = 10
+            count = 5
+            print("    Indicator LED will blink {} times".format(count))
             while count > 0:
                 device.toggleIndicator()
                 time.sleep(0.2)
@@ -69,8 +57,8 @@ class CSBoardTester:
                 count = count - 1
 
         if device.numberOfInputs() is 1:
-            print("    Input detected. Will blink 10 times")
-            count = 10
+            count = 5
+            print("    Indicator LED will blink {} times".format(count))
             while count > 0:
                 device.setState(1)
                 time.sleep(0.2)

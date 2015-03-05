@@ -42,6 +42,8 @@ class CSDevice:
         # device description
         self.description = self.typeNone
 
+    # TODO: handle bad typing in type and mode (wrong case, alternatve names)
+    # (partially done: for modes)
     def setUp(self, type, mode, pin, indicatorPin, name, description):
         """Allows to quickly set up a device object"""
         if type in self.validTypes:
@@ -55,8 +57,8 @@ class CSDevice:
     def isValid(self):
         """Returns true if the device is valid, that is when
         the mode is set and the pin number is correct"""
-        if (self.mode is self.modeSimulator
-        or self.mode is self.modeGpio) \
+        if (self.mode == self.modeSimulator
+        or self.mode == self.modeGpio) \
         and (self.pin >= 0 and self.pin <= 31):
             return True
         else:
@@ -99,7 +101,7 @@ class CSDevice:
         """Returns the number of inputs this device has. An input is something
         we can change, like LED state, a switch, and so on"""
         result = 1
-        if self.type is self.typeDht or self.type is self.typeNone:
+        if self.type == self.typeDht or self.type == self.typeNone:
             result = 0
         return result
 
@@ -107,17 +109,17 @@ class CSDevice:
         """Returns the number of outputs. An output is something that
         returns a value, like a temperature sensor"""
         result = 0
-        if self.type is self.typeDht:
+        if self.type == self.typeDht:
             result = 2
         return result
 
     def setDataMode(self, mode):
         """Sets the data source to either real GPIO or simulator"""
-        if mode is self.modeSimulator:
+        if mode.lower() == self.modeSimulator.lower():
             import CSBoardSimulator
             self._dataSource = CSBoardSimulator.CSBoardSimulator()
             self.mode = self.modeSimulator
-        elif mode is self.modeGpio:
+        elif mode.lower() == self.modeGpio.lower():
             import CSBoardGpio
             self._dataSource = CSBoardGpio.CSBoardGpio()
             self.mode = self.modeGpio
