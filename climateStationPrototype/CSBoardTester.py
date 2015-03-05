@@ -14,12 +14,12 @@ class CSBoardTester:
         devices = []
         simulated = []
         device1 = CSDevice.CSDevice()
-        device1.setUp(device1.typeDht, device1.modeGpio, 20,
+        device1.setUp(device1.typeDht, device1.modeSimulator, 20,
             21, "First DHT device", "None")
         devices.append(device1)
 
         device2 = CSDevice.CSDevice()
-        device2.setUp(device2.typeDht, device2.modeGpio, 19,
+        device2.setUp(device2.typeDht, device2.modeSimulator, 19,
              26, "Second DHT device", "None")
         devices.append(device2)
 
