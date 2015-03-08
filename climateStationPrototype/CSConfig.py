@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-import ConfigParser
+from sys import version_info
+
+if version_info.major < 3:
+    import ConfigParser
+else:
+    import configparser
 import CSDevice
 from os import path
 
@@ -15,7 +20,11 @@ class CSConfig:
     def loadDevices(self, fileName):
         """Loads a list of devices from file with fileName. Config files
         and device list files are separate to allow greater flexibility"""
-        parser = ConfigParser.ConfigParser()
+        parser = None
+        if version_info.major < 3:
+            parser = ConfigParser.ConfigParser()
+        else:
+            parser = configparser.ConfigParser()
         filePath = path.join(path.dirname(__file__), fileName)
         parser.read(filePath)
         print("Loading devices from file '{}'".format(filePath))
@@ -35,7 +44,11 @@ class CSConfig:
     # TODO: check for errors, exceptions
     def saveDevices(self, devices, fileName):
         """Saves devices to a file under fileName"""
-        parser = ConfigParser.ConfigParser()
+        parser = None
+        if version_info.major < 3:
+            parser = ConfigParser.ConfigParser()
+        else:
+            parser = configparser.ConfigParser()
         index = 0
         for device in devices:
             section = "Device" + index
