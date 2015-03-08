@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-import CSBoardTester
+from CSBoardTester import CSBoardTester
+from CSConfig import CSConfig
 from sys import argv
 
-tester = CSBoardTester.CSBoardTester()
+tester = CSBoardTester()
 
 if "-h" in argv or "--help" in argv:
     print("Raspberry Pi Climate Station - prototype\n\n"
@@ -18,6 +19,13 @@ if "-h" in argv or "--help" in argv:
 else:
     if "-s" in argv or "--simulated" in argv:
         tester.loadDevices("simulatedDevices.ini")
+    elif "-t" in argv:
+        tester.loadDevices("simulatedDevices.ini")
     else:
         tester.loadDevices("realDevices.ini")
     tester.test()
+    outFile = "out/deviceSavingTest.ini"
+    print("Testing INI file saving: current file list will be saved to {}"
+        .format(outFile))
+    config = CSConfig()
+    config.saveDevices(tester.manager.devices, outFile)

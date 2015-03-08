@@ -32,12 +32,12 @@ class CSConfig:
         for section in parser.sections():
             device = CSDevice.CSDevice()
             device.setUp(
-                parser.get(section, "Type"),
-                parser.get(section, "Mode"),
-                parser.getint(section, "Pin"),
-                parser.getint(section, "IndicatorPin"),
-                parser.get(section, "Name"),
-                parser.get(section, "Description"))
+                parser.get(section, "type"),
+                parser.get(section, "mode"),
+                parser.getint(section, "pin"),
+                parser.getint(section, "indicatorpin"),
+                parser.get(section, "name"),
+                parser.get(section, "description"))
             result.append(device)
         return result
 
@@ -49,15 +49,16 @@ class CSConfig:
             parser = ConfigParser.ConfigParser()
         else:
             parser = configparser.ConfigParser()
+        filePath = path.join(path.dirname(__file__), fileName)
         index = 0
         for device in devices:
-            section = "Device" + index
+            section = "Device" + str(index)
             parser.add_section(section)
-            parser.set(section, "Type", device.type)
-            parser.set(section, "Mode", device.mode)
-            parser.set(section, "Pin", device.pin)
-            parser.set(section, "IndicatorPin", device.indicatorPin)
-            parser.set(section, "Name", device.name)
-            parser.set(section, "Description", device.description)
+            parser.set(section, "type", device.type)
+            parser.set(section, "mode", device.mode)
+            parser.set(section, "pin", str(device.pin))
+            parser.set(section, "indicatorpin", str(device.indicatorPin))
+            parser.set(section, "name", device.name)
+            parser.set(section, "description", device.description)
             index = index + 1
-        parser.write(open(fileName, 'wb'))
+        parser.write(open(filePath, 'wt', encoding='utf-8'))
