@@ -21,14 +21,22 @@ if "-h" in argv or "--help" in argv:
 else:
     if "-s" in argv or "--simulated" in argv:
         tester.loadDevices("simulatedDevices.ini")
-    elif "-t" in argv:
-        tester.loadDevices("simulatedDevices.ini")
     else:
         tester.loadDevices("realDevices.ini")
     tester.test()
 
+    outFile = "out/deviceSavingTest.ini"
+    if "-o" in argv or "--out" in argv:
+        index = argv.index("-o")
+        if index == -1:
+            index = argv.index("--out")
+
+        if len(argv) > index + 1:
+            outFile = argv[index + 1]
+        else:
+            print("No input file name given: will use the default one")
+
     if "-t" in argv or "--test-file-saving" in argv:
-        outFile = "out/deviceSavingTest.ini"
         print("Testing INI file saving: current file list will be saved to {}"
             .format(outFile))
         config = CSConfig()
