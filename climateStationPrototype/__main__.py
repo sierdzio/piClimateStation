@@ -17,7 +17,8 @@ if "-h" in argv or "--help" in argv:
         "external libraries, Python 3 is not supported in real device mode, "
         "when connected to GPIO. Sorry about that.\n\n"
         "Use '-t' or '--test-file-saving' to save current device list to out "
-        "directory")
+        "directory\n\n"
+        "Use '-o name' or '--out name' to specify custom output file name")
 else:
     if "-s" in argv or "--simulated" in argv:
         tester.loadDevices("simulatedDevices.ini")
