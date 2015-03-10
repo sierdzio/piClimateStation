@@ -3,6 +3,7 @@ from sys import version_info
 
 if version_info.major < 3:
     import ConfigParser
+    import codecs
 else:
     import configparser
 import CSDevice
@@ -61,4 +62,7 @@ class CSConfig:
             parser.set(section, "name", device.name)
             parser.set(section, "description", device.description)
             index = index + 1
-        parser.write(open(filePath, 'wt', encoding='utf-8'))
+        if version_info.major < 3:
+            parser.write(codecs.open(filePath, 'wt', encoding='utf-8'))
+        else:
+            parser.write(open(filePath, 'wt', encoding='utf-8'))
