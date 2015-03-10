@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import CSBoardManager
 import CSConfig
-#import CSDevice
-import time
+from time import sleep
 
 
 class CSBoardTester:
@@ -47,23 +46,22 @@ class CSBoardTester:
             return
 
         if device.hasIndicator():
-            count = 5
-            print("    Indicator LED will blink {} times".format(count))
-            while count > 0:
-                device.toggleIndicator()
-                time.sleep(0.2)
-                device.toggleIndicator()
-                time.sleep(0.2)
-                count = count - 1
+            count = 2
+            print("    Indicator LED will blink for {} seconds".format(count))
+            device.toggleIndicator()
+            sleep(count)
+            device.toggleIndicator()
 
+        # Toggle a switch
         if device.numberOfInputs() is 1:
             count = 5
-            print("    Indicator LED will blink {} times".format(count))
+            print("    The device will be toggled repeatedly {} times"
+                .format(count))
             while count > 0:
                 device.setState(1)
-                time.sleep(0.2)
+                sleep(0.2)
                 device.setState(0)
-                time.sleep(0.2)
+                sleep(0.2)
                 count = count - 1
 
         if device.numberOfOutputs() is 2:

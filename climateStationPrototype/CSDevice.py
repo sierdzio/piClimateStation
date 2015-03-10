@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from time import sleep
+import threading
 
 
 class CSDevice:
@@ -32,6 +34,8 @@ class CSDevice:
         # Does the device have a LED indicator (and it's pin)
         self.indicatorPin = -1
         self.indicatorState = False
+        self.threadStopEvent = threading.Event()
+        self._indicatorThread = None
 
         # Device's GPIO pin number (BCM!)
         self.pin = -1
@@ -90,12 +94,30 @@ class CSDevice:
         else:
             return False
 
+    def _indicatorToggler(self, event, source, pin):
+        tempState = False
+        while not event.is_set():
+            source.setSwitchState(pin, tempState)
+            sleep(0.2)
+            tempState = not tempState
+
     def toggleIndicator(self):
         """Turns the indicator LED on or off"""
         if self.hasIndicator() and self.isValid():
             self.indicatorState = not self.indicatorState
-            self._dataSource.setSwitchState(self.indicatorPin,
-            self.indicatorState)
+
+            if self._indicatorThread:
+                self.threadStopEvent.set()
+
+            if not self.indicatorState:
+                return
+
+            self._indicatorThread = threading.Thread(
+                args=(self.threadStopEvent, self._dataSource,
+                     self.indicatorPin),
+                target=self._indicatorToggler)
+            self.threadStopEvent.clear()
+            self._indicatorThread.start()
 
     def numberOfInputs(self):
         """Returns the number of inputs this device has. An input is something
