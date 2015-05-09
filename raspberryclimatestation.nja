@@ -21,7 +21,8 @@
     ".css", 
     ".json", 
     ".js", 
-    ".ini"
+    ".ini", 
+    ".txt"
   ], 
   "project-type": "Python", 
   "postExecScript": "", 
