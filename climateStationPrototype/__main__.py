@@ -21,6 +21,9 @@ parser.add_argument('-o', '--out', dest="outFile", type=str,
 parser.add_argument('-t', '--test-file-saving', dest="testFS",
     action="store_true", help="specify custom output file name")
 
+# TODO: add more logging options (ability to store measurements in a separate
+# file; store device info separately; errors; timestamps)
+
 args = parser.parse_args()
 tester = CSBoardTester()
 
@@ -31,7 +34,7 @@ else:
 tester.test()
 
 if args.testFS:
-    print("Testing INI file saving: current file list will be saved to {}"
-    .format(args.outFile))
+    print(("Testing INI file saving: current file list will be saved to {}"
+    .format(args.outFile)))
     config = CSConfig()
     config.saveDevices(tester.manager.devices, args.outFile)
