@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from CSBoardTester import CSBoardTester
-from CSConfig import CSConfig
 import argparse
 
 parser = argparse.ArgumentParser(description="Raspberry Pi Climate Station "
@@ -10,19 +9,24 @@ parser = argparse.ArgumentParser(description="Raspberry Pi Climate Station "
         "to use of external libraries, Python 3 is not supported in real "
         "device mode, when connected to GPIO. Sorry about that.")
 
-parser.add_argument('-s', '--simulated', dest="simulated", action="store_true",
+parser.add_argument('--simulated', dest="simulated", action="store_true",
     help="run the test in simulated mode - using the "
     "simulatedDevices.ini file as device list")
 
-parser.add_argument('-o', '--out', dest="outFile", type=str,
-    default="out/deviceSavingTest.ini",
-    help="save current device list to out directory")
-
-parser.add_argument('-t', '--test-file-saving', dest="testFS",
-    action="store_true", help="specify custom output file name")
-
 # TODO: add more logging options (ability to store measurements in a separate
 # file; store device info separately; errors; timestamps)
+
+parser.add_argument('-s', '--sensor-out-file', dest="sensorOutFile", type=str,
+    help="path to file where sensor output should be written")
+
+parser.add_argument('-o', '--out-file', dest="outFile", type=str,
+    help="path to file where all remaining output should be written (device "
+    "list, warnings, errors, runtime messages)")
+
+parser.add_argument('-so', '--combined-out', dest="combinedOut", type=str,
+    help="combination of -s and -o . Path to file where all output (sensor data"
+    ", runtime messages, device list, warnings, errors, etc.) "
+    "should be written")
 
 args = parser.parse_args()
 tester = CSBoardTester()
@@ -31,10 +35,5 @@ if args.simulated:
     tester.loadDevices("simulatedDevices.ini")
 else:
     tester.loadDevices("realDevices.ini")
-tester.test()
 
-if args.testFS:
-    print(("Testing INI file saving: current file list will be saved to {}"
-    .format(args.outFile)))
-    config = CSConfig()
-    config.saveDevices(tester.manager.devices, args.outFile)
+tester.test()
