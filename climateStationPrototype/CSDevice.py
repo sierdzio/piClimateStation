@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from time import sleep
 import threading
+import logging
 
 
 class CSDevice:
@@ -23,6 +24,10 @@ class CSDevice:
 
         self.validTypes = [self.typeDht, self.typeLED, self.typeSwitch]
         self.validModes = [self.modeGpio, self.modeSimulator]
+
+        self.logger = logging.getLogger(__name__)
+        handler = logging.FileHandler('out/deviceReadings.log', 'a+', "UTF-8")
+        self.logger.addHandler(handler)
 
         # Device type
         self.type = self.typeNone
@@ -77,7 +82,9 @@ class CSDevice:
         """Returns the values reported by given sensor.
         Or None if data source is invalid"""
         if self.isValid():
-            return self._dataSource.getSensorState(self.pin)
+            humidity, temperature = self._dataSource.getSensorState(self.pin)
+            self.logger.info("H:%s;T:%s", humidity, temperature)
+            return (humidity, temperature)
         else:
             return None
 

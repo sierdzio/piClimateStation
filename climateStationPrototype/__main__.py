@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from CSBoardTester import CSBoardTester
+from CSConfig import CSConfig
 import argparse
+import logging
 
 parser = argparse.ArgumentParser(description="Raspberry Pi Climate Station "
         "- prototype. Project maintains partial Python 3 compatibility - that "
@@ -13,8 +15,10 @@ parser.add_argument('--simulated', dest="simulated", action="store_true",
     help="run the test in simulated mode - using the "
     "simulatedDevices.ini file as device list")
 
-# TODO: add more logging options (ability to store measurements in a separate
-# file; store device info separately; errors; timestamps)
+parser.add_argument('--silent-console', dest="silentConsole",
+    action="store_true",
+    help="do not print anything to the console. All output will be redirected "
+        "to output files")
 
 parser.add_argument('-s', '--sensor-out-file', dest="sensorOutFile", type=str,
     help="path to file where sensor output should be written")
@@ -28,12 +32,16 @@ parser.add_argument('-so', '--combined-out', dest="combinedOut", type=str,
     ", runtime messages, device list, warnings, errors, etc.) "
     "should be written")
 
+logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y/%m/%d %H:%M:%S', level=logging.INFO)
+
 args = parser.parse_args()
-tester = CSBoardTester()
+config = CSConfig()
+tester = CSBoardTester(config)
 
 if args.simulated:
-    tester.loadDevices("simulatedDevices.ini")
+    config.loadDevices("simulatedDevices.ini")
 else:
-    tester.loadDevices("realDevices.ini")
+    config.loadDevices("realDevices.ini")
 
 tester.test()

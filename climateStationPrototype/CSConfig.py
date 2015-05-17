@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from sys import version_info
+import logging
 
 if version_info.major < 3:
     import ConfigParser
@@ -38,7 +39,7 @@ class CSConfig:
             parser = configparser.ConfigParser()
         filePath = path.join(path.dirname(__file__), fileName)
         parser.read(filePath)
-        print("Loading devices from file '{}'".format(filePath))
+        logging.info("Loading devices from file '{}'".format(filePath))
         self.devices = []
         for section in parser.sections():
             device = CSDevice.CSDevice()

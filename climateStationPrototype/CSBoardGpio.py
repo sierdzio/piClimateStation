@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
+import logging
+
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
-    print("Error could not import RPi.GPIO. You need to run as root, or "
+    logging.error("Could not import RPi.GPIO. You need to run as root, or "
     "install the module")
 
 try:
     from Adafruit_DHT import common as DHT
 except RuntimeError:
-    print("Error: could not import Adafruit_DHT module. Please install it")
+    logging.error("Could not import Adafruit_DHT module. Please install it")
 
 
 class CSBoardGpio:
