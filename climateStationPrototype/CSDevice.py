@@ -2,6 +2,7 @@
 from time import sleep
 import threading
 import logging
+from datetime import datetime
 
 
 class CSDevice:
@@ -19,15 +20,17 @@ class CSDevice:
     modeSimulator = "Simulator"
     modeNone = "None"
 
+    logger = logging.getLogger("Device")
+    handler = logging.FileHandler('out/deviceReadings.log', 'a+', "UTF-8")
+
     def __init__(self):
         """Initializes the device"""
 
         self.validTypes = [self.typeDht, self.typeLED, self.typeSwitch]
         self.validModes = [self.modeGpio, self.modeSimulator]
 
-        self.logger = logging.getLogger(__name__)
-        handler = logging.FileHandler('out/deviceReadings.log', 'a+', "UTF-8")
-        self.logger.addHandler(handler)
+        # Logging to file
+        self.logger.addHandler(self.handler)
 
         # Device type
         self.type = self.typeNone
@@ -83,7 +86,8 @@ class CSDevice:
         Or None if data source is invalid"""
         if self.isValid():
             humidity, temperature = self._dataSource.getSensorState(self.pin)
-            self.logger.info("H:%s;T:%s", humidity, temperature)
+            self.logger.info("%s;%s;%s", humidity, temperature,
+                datetime.utcnow())
             return (humidity, temperature)
         else:
             return None

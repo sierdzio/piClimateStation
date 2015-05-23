@@ -70,7 +70,7 @@ class CSBoardTester:
                 sleep(0.2)
                 device.setState(0)
                 sleep(0.2)
-                count = count - 1
+                count -= 1
 
         if device.numberOfOutputs() is 2:
             logging.info("    2 outputs detected. Reading...")
