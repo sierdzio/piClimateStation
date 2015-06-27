@@ -31,6 +31,7 @@ class CSDevice:
 
         # Logging to file
         self.logger.addHandler(self.handler)
+        self.logger.setLevel(logging.DEBUG)
 
         # Device type
         self.type = self.typeNone
@@ -86,7 +87,7 @@ class CSDevice:
         Or None if data source is invalid"""
         if self.isValid():
             humidity, temperature = self._dataSource.getSensorState(self.pin)
-            self.logger.info("%s;%s;%s", humidity, temperature,
+            self.logger.info("h;%s;t;%s;%s", humidity, temperature,
                 datetime.utcnow())
             return (humidity, temperature)
         else:
