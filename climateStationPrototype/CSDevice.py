@@ -20,17 +20,22 @@ class CSDevice:
     modeSimulator = "Simulator"
     modeNone = "None"
 
-    logger = logging.getLogger("Device")
-    handler = logging.FileHandler('out/deviceReadings.log', 'a+', "UTF-8")
+    #logger = logging.getLogger("Device")
+    #handler = logging.FileHandler('out/deviceReadings.log', 'a+', "UTF-8")
 
-    def __init__(self):
+    def __init__(self, sensorOutFilePath):
         """Initializes the device"""
 
         self.validTypes = [self.typeDht, self.typeLED, self.typeSwitch]
         self.validModes = [self.modeGpio, self.modeSimulator]
 
         # Logging to file
-        self.logger.addHandler(self.handler)
+        self.logger = logging.getLogger("Device")
+
+        # "Device" logger is global, so we only need to set it up once
+        if len(self.logger.handlers) == 0:
+            handler = logging.FileHandler(sensorOutFilePath, 'a+', "UTF-8")
+            self.logger.addHandler(handler)
         self.logger.setLevel(logging.DEBUG)
 
         # Device type

@@ -17,16 +17,16 @@ class CSConfig:
     devices = []
 
     # Output file section
-    sensorOutFilePath = "out/readings.log"
-    outFilePath = "out/out.log"
+    sensorOutFilePath = 'out/deviceReadings.log'
 
     # If sensorOutFilePath and outFilePath are the same, the output is combined
     # and put into a single file
     combined = False
 
-    def __init__(self):
-        """Does nothing"""
-        pass
+    def __init__(self, commandLineArgs):
+        """Initializes the runtime config"""
+        if commandLineArgs.sensorOutFile:
+            self.sensorOutFilePath = commandLineArgs.sensorOutFile
 
     # TODO: check for errors, exceptions
     def loadDevices(self, fileName):
@@ -42,7 +42,7 @@ class CSConfig:
         logging.info("Loading devices from file '{}'".format(filePath))
         self.devices = []
         for section in parser.sections():
-            device = CSDevice.CSDevice()
+            device = CSDevice.CSDevice(self.sensorOutFilePath)
             device.setUp(
                 parser.get(section, "type"),
                 parser.get(section, "mode"),
